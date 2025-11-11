@@ -7,7 +7,7 @@ import csv
 from datetime import datetime
 import matplotlib.pyplot as plt
 from typing import Optional
-from openai import OpenAIError
+
 
 
 # ============================================================
@@ -296,6 +296,7 @@ if user_input := st.chat_input("💬 Ask a question (business, data, or general 
                     st.info("🌐 Web Insight:")
                     st.markdown(web_info)
                     add_chat("assistant", web_info)
+
 
 
 

@@ -1,0 +1,7 @@
+streamlit
+duckdb
+pandas
+google-generativeai
+matplotlib
+requests
+

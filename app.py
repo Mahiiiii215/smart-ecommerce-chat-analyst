@@ -24,7 +24,8 @@ con = duckdb.connect("ecommerce.duckdb")
 # ============================================================
 
 
-DATA_PATH = "etl"  # Folder where your CSVs are stored (change if needed)
+DATA_PATH = r"C:\Users\HP\maersk-genai-ecom\data"
+  # Folder where your CSVs are stored (change if needed)
 
 # Mapping of table names to filenames
 olist_files = {
@@ -332,6 +333,7 @@ if user_input := st.chat_input("💬 Ask a question (business, data, or general 
                     st.info("🌐 Web Insight:")
                     st.markdown(web_info)
                     add_chat("assistant", web_info)
+
 
 
 

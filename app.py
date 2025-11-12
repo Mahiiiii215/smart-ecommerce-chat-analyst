@@ -24,7 +24,9 @@ con = duckdb.connect("ecommerce.duckdb")
 # ============================================================
 
 
-DATA_PATH = r"C:\Users\HP\maersk-genai-ecom\data"
+# ✅ Use relative path (works both locally and on Streamlit Cloud)
+DATA_PATH = os.path.join(os.getcwd(), "data")
+
   # Folder where your CSVs are stored (change if needed)
 
 # Mapping of table names to filenames
@@ -333,6 +335,7 @@ if user_input := st.chat_input("💬 Ask a question (business, data, or general 
                     st.info("🌐 Web Insight:")
                     st.markdown(web_info)
                     add_chat("assistant", web_info)
+
 
 
 

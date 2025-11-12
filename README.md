@@ -12,13 +12,19 @@ It bridges the gap between business teams and data analytics, allowing anyone to
 🚀 Features
 
 ✅ Conversational Analytics – Ask business questions in natural language.
+
 ✅ Automatic SQL Generation – Converts queries into optimized DuckDB SQL.
+
 ✅ Real-Time Query Execution – Instant answers from your local or cloud data.
+
 ✅ Intelligent Explanations – Each result includes an AI-written insight.
+
 ✅ Web Knowledge Fallback – Expands context using Gemini’s reasoning.
+
 ✅ Interactive Charts – Auto-generated graphs and exportable CSVs.
 
 🏗️ System Architecture
+
 graph TD
     A[🧑‍💼 User] -->|Question in natural language| B[💬 Streamlit Chat UI]
     B --> C[🧠 Gemini Model (SQL Generator)]
@@ -62,6 +68,7 @@ product_category_name_translation.csv
 These datasets represent real-world Brazilian e-commerce transactions, including orders, payments, products, and sellers.
 
 ⚙️ Tech Stack
+
 Component	Technology
 Frontend	Streamlit
 Backend	Python

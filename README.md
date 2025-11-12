@@ -69,19 +69,19 @@ These datasets represent real-world Brazilian e-commerce transactions, including
 
 ⚙️ Tech Stack
 
-Component	Technology
+Component - Technology
 
-Frontend	Streamlit
+Frontend - Streamlit
 
-Backend	Python
+Backend	- Python
 
-Query Engine	DuckDB
+Query Engine -	DuckDB
 
-AI Model	Gemini/OpenAI API
+AI Model- Gemini/OpenAI API
 
-Deployment	Streamlit Cloud
+Deployment - Streamlit Cloud
 
-Data Source	Olist E-Commerce Dataset (CSV)
+Data Source - Olist E-Commerce Dataset (CSV)
 
 
 🧠 How It Works

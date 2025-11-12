@@ -150,13 +150,21 @@ Try asking:
 🔮 Future Work
 
 ✨ Voice Input Support – Enable speech-to-text queries.
+
 ✨ Real-Time Dashboards – Live updates for sales KPIs.
+
 ✨ Multi-Database Support – Add BigQuery, Snowflake, or PostgreSQL.
+
 ✨ Authentication & Profiles – Personalized insights per user.
+
 ✨ Automated Insights – Detect trends and anomalies in sales data.
+
 
 👩‍💻 Author
 
 Developed by: Mahathee Penugonda
+
 Platform: Streamlit Cloud
+
 Repository: GitHub – Smart E-Commerce Chat Analyst
+

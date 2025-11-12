@@ -19,6 +19,42 @@ genai.configure(api_key="AIzaSyDLbeiUqaAYM3mhXFjRbgGgo6MgR0M7L2I")  # Replace wi
 # 2️⃣ Connect to DuckDB
 # ============================================================
 con = duckdb.connect("ecommerce.duckdb")
+# ============================================================
+# ✅ Load Olist Dataset into DuckDB (if not already loaded)
+# ============================================================
+
+
+DATA_PATH = "etl"  # Folder where your CSVs are stored (change if needed)
+
+# Mapping of table names to filenames
+olist_files = {
+    "customers": "olist_customers_dataset.csv",
+    "geolocation": "olist_geolocation_dataset.csv",
+    "order_items": "olist_order_items_dataset.csv",
+    "order_payments": "olist_order_payments_dataset.csv",
+    "order_reviews": "olist_order_reviews_dataset.csv",
+    "orders": "olist_orders_dataset.csv",
+    "products": "olist_products_dataset.csv",
+    "sellers": "olist_sellers_dataset.csv",
+    "category_translation": "product_category_name_translation.csv"
+}
+
+# Check and create tables if they don't exist
+existing_tables = [t[0] for t in con.execute("SHOW TABLES").fetchall()]
+
+for table, filename in olist_files.items():
+    if table not in existing_tables:
+        file_path = os.path.join(DATA_PATH, filename)
+        if os.path.exists(file_path):
+            print(f"📥 Loading {filename} → {table}")
+            con.execute(f"""
+                CREATE TABLE {table} AS
+                SELECT * FROM read_csv_auto('{file_path}', header=True)
+            """)
+        else:
+            print(f"⚠️ File not found: {file_path}")
+    else:
+        print(f"✅ Table already exists: {table}")
 
 # ============================================================
 # 3️⃣ Initialize Gemini Model
@@ -296,6 +332,7 @@ if user_input := st.chat_input("💬 Ask a question (business, data, or general 
                     st.info("🌐 Web Insight:")
                     st.markdown(web_info)
                     add_chat("assistant", web_info)
+
 
 
 

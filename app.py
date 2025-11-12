@@ -7,6 +7,8 @@ import csv
 from datetime import datetime
 import matplotlib.pyplot as plt
 from typing import Optional
+from serpapi import GoogleSearch
+
 
 
 
@@ -174,25 +176,71 @@ def external_trend_response(user_input):
     return None
 
 
+  # ============================================================
+# 🌐 Live Web Search (SerpAPI Integration)
+# ============================================================
+SERPAPI_KEY = os.getenv("SERPAPI_KEY")  # Loaded from Streamlit Secrets or environment
+
+def serpapi_web_search(query):
+    """Fetch short factual summaries from Google Search using SerpAPI."""
+    if not SERPAPI_KEY:
+        return None
+    try:
+        params = {
+            "engine": "google",
+            "q": query,
+            "api_key": SERPAPI_KEY,
+            "num": 3,
+            "hl": "en"
+        }
+        search = GoogleSearch(params)
+        results = search.get_dict()
+
+        snippets = []
+        sources = []
+        if "organic_results" in results:
+            for r in results["organic_results"][:3]:
+                if "snippet" in r:
+                    snippets.append(r["snippet"])
+                if "title" in r and "link" in r:
+                    sources.append(f"- [{r['title']}]({r['link']})")
+
+        summary = " ".join(snippets) if snippets else None
+        if summary:
+            summary += "\n\n**Sources:**\n" + "\n".join(sources)
+        return summary
+    except Exception as e:
+        return f"⚠️ SerpAPI error: {e}"
+
+
+
 # ============================================================
 # 8️⃣ Web Knowledge Fallback
 # ============================================================
+# ============================================================
+# 8️⃣ Enhanced Web Knowledge (SerpAPI + Gemini Fallback)
+# ============================================================
 def fetch_web_answer(question: str) -> Optional[str]:
     """
-    When no relevant SQL result or data exists, use Gemini's web-aware reasoning
-    to bring in external business intelligence.
+    First try SerpAPI (live Google data),
+    then fallback to Gemini reasoning if nothing found.
     """
+    serp_summary = serpapi_web_search(question)
+    if serp_summary and "⚠️" not in serp_summary:
+        return f"🌐 **Live Web Insight (SerpAPI):**\n\n{serp_summary}"
+
+    # Fallback to Gemini if no SerpAPI summary
     prompt = f"""
     The user asked: "{question}"
-    Please provide a web-informed, factual and current explanation or summary
-    relevant to e-commerce, market trends, or analytics insights.
-    Keep it under 5 sentences.
+    Please provide a factual and current summary relevant to e-commerce,
+    market trends, or analytics insights. Keep it under 5 sentences.
     """
     try:
         response = model.generate_content(prompt)
         return response.text.strip()
     except Exception:
         return None
+
 
 # ============================================================
 # 9️⃣ Memory & Session State
@@ -335,6 +383,7 @@ if user_input := st.chat_input("💬 Ask a question (business, data, or general 
                     st.info("🌐 Web Insight:")
                     st.markdown(web_info)
                     add_chat("assistant", web_info)
+
 
 
 

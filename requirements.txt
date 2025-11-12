@@ -4,4 +4,7 @@ pandas
 google-generativeai
 matplotlib
 requests
+google-search-results
+
+
 
